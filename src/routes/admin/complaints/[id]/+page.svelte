@@ -51,7 +51,9 @@
 					<dd>{formatDateTime(c.updatedAt)}</dd>
 				</div>
 			</dl>
-			<p class="mt-4 whitespace-pre-line text-slate-700">{c.description}</p>
+			<div class="prose prose-slate mt-4 max-w-none text-slate-700">
+				{@html c.description}
+			</div>
 
 			{#if c.attachments.length > 0}
 				<ul class="mt-4 flex flex-wrap gap-2">

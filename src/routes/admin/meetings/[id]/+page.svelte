@@ -62,7 +62,9 @@
 				</div>
 			</dl>
 			{#if mtg.reason}
-				<p class="mt-4 whitespace-pre-line text-slate-700">{mtg.reason}</p>
+				<div class="prose prose-slate mt-4 max-w-none text-slate-700">
+					{@html mtg.reason}
+				</div>
 			{/if}
 		</div>
 

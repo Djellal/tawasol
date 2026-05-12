@@ -51,7 +51,9 @@
 						<dd>{formatDateTime(c.createdAt)}</dd>
 					</div>
 				</dl>
-				<p class="mt-4 whitespace-pre-line text-slate-700">{c.description}</p>
+				<div class="prose prose-slate mt-4 max-w-none text-slate-700">
+					{@html c.description}
+				</div>
 
 				<h3 class="mt-6 font-semibold text-slate-900">{m.responses_label()}</h3>
 				{#if c.responses.length === 0}
@@ -103,7 +105,9 @@
 					{/if}
 				</dl>
 				{#if mtg.reason}
-					<p class="mt-4 whitespace-pre-line text-slate-700">{mtg.reason}</p>
+					<div class="prose prose-slate mt-4 max-w-none text-slate-700">
+						{@html mtg.reason}
+					</div>
 				{/if}
 
 				<h3 class="mt-6 font-semibold text-slate-900">{m.responses_label()}</h3>

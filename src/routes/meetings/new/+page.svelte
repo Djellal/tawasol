@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { m } from '$lib/paraglide/messages.js';
 	import { departmentName } from '$lib/i18n';
+	import RichTextEditor from '$lib/components/RichTextEditor.svelte';
 	import type { PageData, ActionData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
@@ -70,14 +71,7 @@
 			/>
 		</label>
 
-		<label class="block">
-			<span class="mb-1 block text-sm font-medium text-slate-700">{m.form_reason()}</span>
-			<textarea
-				name="reason"
-				rows="4"
-				class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 shadow-sm focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-			></textarea>
-		</label>
+		<RichTextEditor name="reason" label={m.form_reason()} />
 
 		<div class="grid gap-4 sm:grid-cols-2">
 			<label class="block">
