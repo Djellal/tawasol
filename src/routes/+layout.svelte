@@ -1,8 +1,7 @@
 <script lang="ts">
-	import type { Pathname } from '$app/types';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { locales, localizeHref, getLocale } from '$lib/paraglide/runtime';
+	import { locales, localizeHref, getLocale, deLocalizeHref } from '$lib/paraglide/runtime';
 	import { m } from '$lib/paraglide/messages.js';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
@@ -49,7 +48,9 @@
 							class="rounded px-2 py-1 hover:bg-slate-100"
 							class:font-bold={getLocale() === locale}
 							class:text-emerald-700={getLocale() === locale}
-							href={resolve(localizeHref(page.url.pathname, { locale }) as Pathname)}
+							href={localizeHref(deLocalizeHref(page.url.pathname), { locale })}
+							hreflang={locale}
+							data-sveltekit-reload
 							>{localeNames[locale] ?? locale}</a
 						>
 					{/each}

@@ -1,6 +1,6 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"app_name": "تواصل",
+	"app_name": "جامعة فرحات عباس سطيف 1",
 	"app_tagline": "منصة الشكاوى وطلبات المقابلات",
 	"hello_world": "مرحباً، {name}!",
 
