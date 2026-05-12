@@ -1,6 +1,6 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"app_name": "Tawasol",
+	"app_name": "Université Ferhat Abbes Sétif 1",
 	"app_tagline": "Plateforme de plaintes et de demandes d'audience",
 	"hello_world": "Bonjour, {name}!",
 

@@ -1,7 +1,8 @@
 <script lang="ts">
+	import type { Pathname } from '$app/types';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import { locales, localizeHref, getLocale, deLocalizeHref } from '$lib/paraglide/runtime';
+	import { locales, localizeHref, getLocale } from '$lib/paraglide/runtime';
 	import { m } from '$lib/paraglide/messages.js';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
@@ -25,7 +26,7 @@
 	<header class="border-b border-slate-200 bg-white">
 		<div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
 			<a href={resolve('/')} class="flex items-center gap-2 text-lg font-bold text-emerald-700">
-				<span class="inline-block h-8 w-8 rounded-lg bg-emerald-600"></span>
+				<img src="/logo-200x200.png" alt="University Logo" class="h-10 w-10 object-contain" />
 				<span>{m.app_name()}</span>
 			</a>
 
@@ -48,9 +49,7 @@
 							class="rounded px-2 py-1 hover:bg-slate-100"
 							class:font-bold={getLocale() === locale}
 							class:text-emerald-700={getLocale() === locale}
-							href={localizeHref(deLocalizeHref(page.url.pathname), { locale })}
-							hreflang={locale}
-							data-sveltekit-reload
+							href={resolve(localizeHref(page.url.pathname, { locale }) as Pathname)}
 							>{localeNames[locale] ?? locale}</a
 						>
 					{/each}

@@ -1,6 +1,6 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"app_name": "Tawasol",
+	"app_name": "Setif 1 University",
 	"app_tagline": "Complaints & meeting requests platform",
 	"hello_world": "Hello, {name}!",
 
@@ -130,7 +130,7 @@
 	"users_save": "Save",
 	"users_none_dept": "—",
 
-	"footer_text": "© 2025 Tawasol — All rights reserved",
+	"footer_text": "© 2026 Setif 1 University — All rights reserved",
 	"language": "Language",
 
 	"unauthorized": "You are not authorized to view this page."
