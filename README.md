@@ -1,6 +1,6 @@
 # تواصل · Tawasol
 
-Plateforme de gestion des plaintes et des demandes d'audience pour une institution publique. Built with **SvelteKit (Svelte 5 runes)**, **Drizzle ORM (libSQL/SQLite)**, **better-auth**, **Paraglide** (ar / fr / en) and **Tailwind v4**.
+Plateforme de gestion des plaintes et des demandes d'audience pour une institution publique. Built with **SvelteKit (Svelte 5 runes)**, **Drizzle ORM (PostgreSQL)**, **better-auth**, **Paraglide** (ar / fr / en) and **Tailwind v4**.
 
 ## Features
 
@@ -20,10 +20,11 @@ npm install
 
 # 2. Configure environment
 cp .env.example .env
+# edit DATABASE_URL to point to your PostgreSQL instance
 # edit BETTER_AUTH_SECRET (32+ chars) and ORIGIN if needed
 
-# 3. Push the schema to a local SQLite database
-npm run db:push        # uses $DATABASE_URL (default: file:local.db)
+# 3. Push the schema to the database
+npm run db:push        # uses $DATABASE_URL
 
 # 4. Start dev server
 npm run dev
@@ -65,8 +66,8 @@ npm run auth:schema       # regenerate better-auth drizzle schema
 
 ```diagram
 ╭─────────────────────────╮     ╭───────────────────╮     ╭──────────────────╮
-│  Citizen forms          │────▶│  SvelteKit server │────▶│  Drizzle / libSQL │
-│  /complaints, /meetings │     │  actions + load   │     │  tables           │
+│  Citizen forms          │────▶│  SvelteKit server │────▶│  Drizzle /        │
+│  /complaints, /meetings │     │  actions + load   │     │  PostgreSQL       │
 ╰─────────────────────────╯     ╰─────────┬─────────╯     ╰──────────────────╯
                                           │
                                           ▼

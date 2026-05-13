@@ -52,15 +52,16 @@ export const actions: Actions = {
 		}
 
 		try {
+			const body: any = {
+				name,
+				email,
+				password,
+				role: role as any,
+				departmentId: role === 'citizen' ? null : departmentId
+			};
 			await auth.api.createUser({
 				headers: event.request.headers,
-				body: {
-					name,
-					email,
-					password,
-					role: role as Role,
-					departmentId: role === 'citizen' ? null : departmentId
-				}
+				body
 			});
 		} catch (e: any) {
 			return fail(400, { message: e.message || 'failed_to_create' });
@@ -82,7 +83,7 @@ export const actions: Actions = {
 		}
 
 		try {
-			await auth.api.deleteUser({
+			await auth.api.removeUser({
 				headers: event.request.headers,
 				body: { userId: id }
 			});

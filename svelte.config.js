@@ -1,33 +1,16 @@
-import adapter from '@sveltejs/adapter-node';
+import adapter from '@sveltejs/adapter-node';  // ← change this line
 
 const config = {
   compilerOptions: {
     runes: ({ filename }) => (filename.split(/[/\\]/).includes('node_modules') ? undefined : true)
   },
   kit: {
-    adapter: adapter(),
+    adapter: adapter(),  // uses build/ by default
     typescript: {
       config: (config) => ({
         ...config,
         include: [...config.include, '../drizzle.config.ts']
       })
-    }
-  },
-  // ↓ Add this block
-  vite: {
-    build: {
-      rollupOptions: {
-        external: [
-          '@libsql/client',
-          '@libsql/linux-x64-gnu',
-          '@libsql/darwin-x64',
-          '@libsql/darwin-arm64',
-          '@libsql/win32-x64-msvc',
-        ]
-      }
-    },
-    optimizeDeps: {
-      exclude: ['@libsql/client']
     }
   }
 };

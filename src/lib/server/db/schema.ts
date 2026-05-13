@@ -1,10 +1,10 @@
-import { relations, sql } from 'drizzle-orm';
-import { integer, sqliteTable, text, index } from 'drizzle-orm/sqlite-core';
+import { relations } from 'drizzle-orm';
+import { pgTable, text, timestamp, index, integer } from 'drizzle-orm/pg-core';
 import { user } from './auth.schema';
 
 /* ----------------------------- Departments ----------------------------- */
 
-export const department = sqliteTable('department', {
+export const department = pgTable('department', {
 	id: text('id')
 		.primaryKey()
 		.$defaultFn(() => crypto.randomUUID()),
@@ -12,17 +12,20 @@ export const department = sqliteTable('department', {
 	nameFr: text('name_fr').notNull(),
 	nameEn: text('name_en').notNull(),
 	description: text('description'),
-	createdAt: integer('created_at', { mode: 'timestamp_ms' })
-		.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-		.notNull()
+	createdAt: timestamp('created_at').defaultNow().notNull()
 });
 
 /* ------------------------------ Complaints ----------------------------- */
 
-import { COMPLAINT_STATUSES, MEETING_STATUSES, type ComplaintStatus, type MeetingStatus } from '$lib/constants';
+import {
+	COMPLAINT_STATUSES,
+	MEETING_STATUSES,
+	type ComplaintStatus,
+	type MeetingStatus
+} from '$lib/constants';
 export { COMPLAINT_STATUSES, MEETING_STATUSES, type ComplaintStatus, type MeetingStatus };
 
-export const complaint = sqliteTable(
+export const complaint = pgTable(
 	'complaint',
 	{
 		id: text('id')
@@ -39,14 +42,12 @@ export const complaint = sqliteTable(
 			.references(() => department.id, { onDelete: 'restrict' }),
 		status: text('status').$type<ComplaintStatus>().notNull().default('pending'),
 		citizenUserId: text('citizen_user_id').references(() => user.id, { onDelete: 'set null' }),
-		createdAt: integer('created_at', { mode: 'timestamp_ms' })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
-		updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+		createdAt: timestamp('created_at').defaultNow().notNull(),
+		updatedAt: timestamp('updated_at')
+			.defaultNow()
 			.$onUpdate(() => new Date())
 			.notNull(),
-		archivedAt: integer('archived_at', { mode: 'timestamp_ms' })
+		archivedAt: timestamp('archived_at')
 	},
 	(t) => [
 		index('complaint_department_idx').on(t.departmentId),
@@ -55,7 +56,7 @@ export const complaint = sqliteTable(
 	]
 );
 
-export const complaintAttachment = sqliteTable(
+export const complaintAttachment = pgTable(
 	'complaint_attachment',
 	{
 		id: text('id')
@@ -68,14 +69,12 @@ export const complaintAttachment = sqliteTable(
 		mimeType: text('mime_type').notNull(),
 		size: integer('size').notNull(),
 		path: text('path').notNull(),
-		createdAt: integer('created_at', { mode: 'timestamp_ms' })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull()
+		createdAt: timestamp('created_at').defaultNow().notNull()
 	},
 	(t) => [index('complaint_attachment_complaint_idx').on(t.complaintId)]
 );
 
-export const complaintResponse = sqliteTable(
+export const complaintResponse = pgTable(
 	'complaint_response',
 	{
 		id: text('id')
@@ -88,16 +87,14 @@ export const complaintResponse = sqliteTable(
 			.notNull()
 			.references(() => user.id, { onDelete: 'restrict' }),
 		message: text('message').notNull(),
-		createdAt: integer('created_at', { mode: 'timestamp_ms' })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull()
+		createdAt: timestamp('created_at').defaultNow().notNull()
 	},
 	(t) => [index('complaint_response_complaint_idx').on(t.complaintId)]
 );
 
 /* --------------------------- Meeting requests --------------------------- */
 
-export const meetingRequest = sqliteTable(
+export const meetingRequest = pgTable(
 	'meeting_request',
 	{
 		id: text('id')
@@ -118,14 +115,12 @@ export const meetingRequest = sqliteTable(
 		scheduledTime: text('scheduled_time'),
 		status: text('status').$type<MeetingStatus>().notNull().default('pending'),
 		citizenUserId: text('citizen_user_id').references(() => user.id, { onDelete: 'set null' }),
-		createdAt: integer('created_at', { mode: 'timestamp_ms' })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull(),
-		updatedAt: integer('updated_at', { mode: 'timestamp_ms' })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
+		createdAt: timestamp('created_at').defaultNow().notNull(),
+		updatedAt: timestamp('updated_at')
+			.defaultNow()
 			.$onUpdate(() => new Date())
 			.notNull(),
-		archivedAt: integer('archived_at', { mode: 'timestamp_ms' })
+		archivedAt: timestamp('archived_at')
 	},
 	(t) => [
 		index('meeting_department_idx').on(t.departmentId),
@@ -134,7 +129,7 @@ export const meetingRequest = sqliteTable(
 	]
 );
 
-export const meetingResponse = sqliteTable(
+export const meetingResponse = pgTable(
 	'meeting_response',
 	{
 		id: text('id')
@@ -147,9 +142,7 @@ export const meetingResponse = sqliteTable(
 			.notNull()
 			.references(() => user.id, { onDelete: 'restrict' }),
 		message: text('message').notNull(),
-		createdAt: integer('created_at', { mode: 'timestamp_ms' })
-			.default(sql`(cast(unixepoch('subsecond') * 1000 as integer))`)
-			.notNull()
+		createdAt: timestamp('created_at').defaultNow().notNull()
 	},
 	(t) => [index('meeting_response_meeting_idx').on(t.meetingId)]
 );
